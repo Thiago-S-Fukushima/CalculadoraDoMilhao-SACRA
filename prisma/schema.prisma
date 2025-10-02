@@ -13,14 +13,27 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model user {
+model User {
   id            Int           @id @default(autoincrement())
   email         String        @unique
   password_hash String
-  calculations  calculation[]
+  calculations  Calculation[]
+  simulations   Simulation[]
 }
 
-model calculation {
+model Simulation {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  aporteInicial Float
+  aporteMensal  Float
+  taxaJuros     Float
+  resultados    String
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Calculation {
   id                   Int      @id @default(autoincrement())
   user_id              Int
   calculation_date     DateTime @default(now())
@@ -28,5 +41,7 @@ model calculation {
   monthly_contribution Float
   monthly_rate         Float
   months_to_reach_goal Int
-  user                 user     @relation(fields: [user_id], references: [id])
+  user                 User     @relation(fields: [user_id], references: [id])
 }
+
+
