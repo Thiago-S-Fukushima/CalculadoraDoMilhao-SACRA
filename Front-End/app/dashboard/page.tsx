@@ -31,7 +31,7 @@ export const DashboardPage = () => {
         Number(taxaJuros)
       );
       setResultados(res.resultados || []);
-      await fetchHistorico(); // Atualiza histórico após simulação
+      await fetchHistorico();
     } catch (err: any) {
       console.error("Erro na simulação:", err.message || err);
       alert(err.message || "Erro na simulação");
@@ -56,8 +56,7 @@ export const DashboardPage = () => {
   return (
     <div className="dashboard">
       <h1 className="dashboard-title">Dashboard</h1>
-
-      {/* Nova Simulação */}
+      
       <div className="card">
         <h2 className="card-title">Nova Simulação</h2>
         <div className="form-grid">
@@ -88,7 +87,6 @@ export const DashboardPage = () => {
         </button>
       </div>
 
-      {/* Resultados */}
       <div className="card">
         <h2 className="card-title">Resultados da Simulação</h2>
         <ul className="list">
@@ -103,7 +101,6 @@ export const DashboardPage = () => {
         </ul>
       </div>
 
-      {/* Histórico */}
       <div className="card">
         <h2 className="card-title">Histórico de Simulações</h2>
         <ul className="list">

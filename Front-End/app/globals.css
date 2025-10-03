@@ -1,21 +1,20 @@
-/* Reset básico para fundo escuro e sem margens */
 html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: #121212; /* mesmo fundo do login/dashboard */
+  background: #121212; 
   color: #e0e0e0;
   font-family: Arial, sans-serif;
 }
 
-/* LOGIN - Tema escuro com detalhes verdes */
+
 .login {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #121212; /* fundo escuro */
+  background: #121212;
   margin: 0;
   padding: 0;
   color: #e0e0e0;
@@ -26,14 +25,14 @@ html, body {
   font-weight: bold;
   text-align: center;
   margin-bottom: 2.5rem;
-  color: #ffffff; /* verde neon */
+  color: #ffffff;
 }
 
 .login-form {
-  background: #1e1e1e; /* formulário escuro */
+  background: #1e1e1e;
   padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 255, 50, 0.25); /* sombra verde */
+  box-shadow: 0 6px 16px rgba(0, 255, 50, 0.25);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -44,15 +43,15 @@ html, body {
 .login-form input {
   padding: 1rem 1.2rem;
   font-size: 1.2rem;
-  border: 1px solid #395a34; /* borda verde */
+  border: 1px solid #395a34;
   border-radius: 10px;
   outline: none;
-  background: #121212; /* fundo do input */
+  background: #121212;
   color: #e0e0e0;
 }
 
 .login-form input::placeholder {
-  color: #ffffff; /* placeholder verde claro */
+  color: #ffffff;
 }
 
 .login-form button {
@@ -60,7 +59,7 @@ html, body {
   font-size: 1.25rem;
   font-weight: bold;
   color: #121212;
-  background: #00ff66; /* verde */
+  background: #00ff66;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -68,11 +67,11 @@ html, body {
 }
 
 .login-form button:hover {
-  background: #28c728; /* verde mais escuro ao passar o mouse */
+  background: #28c728;
 }
 
 
-/* Container principal do dashboard */
+
 .dashboard-container {
   padding: 30px;
   max-width: 1200px;
@@ -83,7 +82,7 @@ html, body {
   margin-left: 50px;
 }
 
-/* Título principal */
+
 .dashboard-container h1 {
   text-align: center;
   font-size: 2.5rem;
@@ -91,7 +90,7 @@ html, body {
   margin-bottom: 40px;
 }
 
-/* Cards */
+
 .card {
   background-color: #1a1a1a;
   margin: 0px 15px 0px 15px;
@@ -101,7 +100,7 @@ html, body {
   box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
 }
 
-/* Inputs */
+
 .card input[type="text"] {
   width: 100%;
   padding: 12px 18px;
@@ -120,7 +119,7 @@ html, body {
   box-shadow: 0 0 8px #00ff66;
 }
 
-/* Botão */
+
 .card button {
   padding: 12px 25px;
   border: none;
@@ -141,7 +140,7 @@ html, body {
   background-color: #00e65e;
 }
 
-/* Lista de resultados e histórico */
+
 ul {
   list-style: none;
   padding: 0;
@@ -157,7 +156,7 @@ li {
   justify-content: space-between;
 }
 
-/* Scroll personalizado */
+
 ul::-webkit-scrollbar {
   width: 8px;
 }
@@ -171,25 +170,11 @@ ul::-webkit-scrollbar-thumb {
   border-radius: 20px;
 }
 
-/* signup.css - tema escuro com detalhes verdes */
-
-/* Reset básico */
-html, body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #121212; /* fundo escuro */
-  color: #e0e0e0; /* texto claro */
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-}
-
-/* Inputs e botões */
 input, button {
   font-family: inherit;
 }
 
-/* Inputs */
+
 .register-input {
   width: 100%;
   padding: 15px 20px;
@@ -204,11 +189,11 @@ input, button {
 }
 
 .register-input:focus {
-  border-color: #00ff66; /* destaque verde */
+  border-color: #00ff66; 
   box-shadow: 0 0 8px #00ff66;
 }
 
-/* Botões */
+
 .register-button {
   width: 100%;
   padding: 15px 25px;
@@ -226,7 +211,7 @@ input, button {
   background-color: #00e65e;
 }
 
-/* Contêiner de formulário */
+
 .register-container {
   max-width: 400px;
   margin: 80px auto;
@@ -240,16 +225,16 @@ input, button {
 /* Título */
 .register-title {
   margin-bottom: 25px;
-  color: #ffffff; /* detalhes verdes */
+  color: #ffffff; 
 }
 
-/* Mensagem de feedback */
+
 .register-message {
   margin-top: 15px;
   color: #00ff66;
 }
 
-/* Inputs */
+
 .register-input {
   width: 100%;
   padding: 15px 20px;
@@ -262,11 +247,11 @@ input, button {
   outline: none;
   transition: 0.2s;
 
-  box-sizing: border-box; /* garante que padding não ultrapasse o tamanho */
+  box-sizing: border-box; 
 }
 
 
-/* Scroll personalizado para listas (caso use) */
+
 ul {
   list-style: none;
   padding: 0;

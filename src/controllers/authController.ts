@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Definindo uma constante fixa para o JWT
+
 const SECRET = "meuSuperSegredo123";
 
 export const signup = async (req: Request, res: Response) => {
@@ -36,7 +36,7 @@ export const login = async (req: Request, res: Response) => {
     if (!valid)
         return res.status(401).json({ error: 'Credenciais inválidas' });
 
-    // Gerando token usando a constante SECRET
+    
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET, { expiresIn: '1d' });
 
     return res.json({ token });
