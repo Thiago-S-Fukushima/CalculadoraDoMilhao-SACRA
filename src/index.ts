@@ -11,7 +11,7 @@ app.use("/simulations", simulationRoutes);
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
-    res.send('API Calculadora do Milhão rodando"');
+    res.redirect("http://localhost:3000/signup");
 });
 
 const PORT = process.env.PORT || 3333;

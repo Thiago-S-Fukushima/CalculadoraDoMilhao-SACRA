@@ -1,6 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
+export default function HomePage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/signup");
+  }, [router]);
+
+  return null;
+}
+
+
+/*
 export default function SimulationForm() {
   const [aporteInicial, setAporteInicial] = useState(1000);
   const [aporteMensal, setAporteMensal] = useState(500);
@@ -46,3 +59,4 @@ export default function SimulationForm() {
     </div>
   );
 }
+*/

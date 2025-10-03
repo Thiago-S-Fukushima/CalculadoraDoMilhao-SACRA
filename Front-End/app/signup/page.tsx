@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const router = useRouter();
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
@@ -17,6 +19,9 @@ export default function SignupPage() {
 
     if (res.ok) {
       setMessage("Usuário criado com sucesso!");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
     } else {
       const err = await res.json();
       setMessage("Erro: " + err.message);
