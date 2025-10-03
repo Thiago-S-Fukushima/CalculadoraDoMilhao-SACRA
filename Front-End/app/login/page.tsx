@@ -3,49 +3,44 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "../../services/api";
 
-export const LoginPage = () => {
+export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [senha, setSenha] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await login(email, password) 
-      console.log("estou logado");
-      if (res.token) {
-        localStorage.setItem("token", res.token);
-        router.push("/dashboard");
-      } else {
-        setError(res.message || "Erro no login");
-      }
-    } catch {
-      setError("Erro no login");
+      const res = await login(email, senha);
+      localStorage.setItem("token", res.token);
+      router.push("/dashboard");
+    } catch (err: any) {
+      alert(err.message || "Erro no login");
     }
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+    <div className="login">
+      <h1 className="login-title">Login</h1>
+      <form onSubmit={handleLogin} className="login-form">
         <input
           type="email"
-          placeholder="Email"
+          placeholder="E-mail"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          className="login-input"
         />
         <input
           type="password"
           placeholder="Senha"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          value={senha}
+          onChange={e => setSenha(e.target.value)}
+          className="login-input"
         />
-        <button type="submit">Entrar</button>
-        {error && <p>{error}</p>}
+        <button type="submit" className="login-button">
+          Entrar
+        </button>
       </form>
     </div>
   );
-};
-
-export default LoginPage;
+}

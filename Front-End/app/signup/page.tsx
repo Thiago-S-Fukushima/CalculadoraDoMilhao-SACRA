@@ -24,11 +24,26 @@ export default function SignupPage() {
   }
 
   return (
-    <form onSubmit={handleSignup}>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Senha" />
-      <button type="submit">Cadastrar</button>
-      <p>{message}</p>
-    </form>
+    <div className="register-container">
+      <h1 className="register-title">Cadastro</h1>
+      <form className="register-form" onSubmit={handleSignup}>
+        <input
+          type="email"
+          className="register-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          className="register-input"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Senha"
+        />
+        <button type="submit" className="register-button">Cadastrar</button>
+      </form>
+      {message && <p className="register-message">{message}</p>}
+    </div>
   );
 }
