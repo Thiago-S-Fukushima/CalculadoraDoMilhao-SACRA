@@ -1,11 +1,13 @@
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export const useAuthGuard = () => {
-    const router = useRouter();
-    useEffect(() => {
-        if (!localStorage.getItem("token")) {
-            router.push("/");
-        }
-    }, []);
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login"); // redireciona para login se não tiver token
+    }
+  }, []);
 };

@@ -1,94 +1,123 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuthGuard } from "../../hooks/useAuthGuard";
 import { createSimulation, getSimulations } from "../../services/api";
 
 export const DashboardPage = () => {
   useAuthGuard();
 
-  const [aporteInicial, setAporteInicial] = useState(0);
-  const [aporteMensal, setAporteMensal] = useState(0);
-  const [taxaJuros, setTaxaJuros] = useState(0);
+  const router = useRouter();
+  const [aporteInicial, setAporteInicial] = useState("");
+  const [aporteMensal, setAporteMensal] = useState("");
+  const [taxaJuros, setTaxaJuros] = useState("");
   const [historico, setHistorico] = useState<any[]>([]);
   const [resultados, setResultados] = useState<any[]>([]);
 
-  const token = localStorage.getItem("token") || "";
+  const storedToken = localStorage.getItem("token");
+  if (!storedToken) {
+    console.error("Token não encontrado, redirecionando para login");
+    router.push("/login");
+    return null;
+  }
+  const token: string = storedToken;
 
   const handleSimulacao = async () => {
-    const res = await createSimulation(token, aporteInicial, aporteMensal, taxaJuros);
-    setResultados(res.resultados || []);
-    fetchHistorico();
+    try {
+      const res = await createSimulation(
+        token,
+        Number(aporteInicial),
+        Number(aporteMensal),
+        Number(taxaJuros)
+      );
+      setResultados(res.resultados || []);
+      await fetchHistorico(); // Atualiza histórico após simulação
+    } catch (err: any) {
+      console.error("Erro na simulação:", err.message || err);
+      alert(err.message || "Erro na simulação");
+    }
   };
 
   const fetchHistorico = async () => {
-    const data = await getSimulations(token);
-    setHistorico(data);
+    try {
+      const data = await getSimulations(token);
+      if (Array.isArray(data)) {
+        setHistorico(data);
+      } else {
+        setHistorico([]);
+        console.error("Erro ao buscar histórico:", data.message);
+      }
+    } catch (error: any) {
+      setHistorico([]);
+      console.error("Erro ao buscar histórico:", error.message || error);
+    }
   };
 
-  useEffect(() => {
-    fetchHistorico();
-  }, []);
-
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Dashboard</h1>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Dashboard</h1>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <h2 className="text-xl font-semibold mb-4">Nova Simulação</h2>
+      {/* Nova Simulação */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg mb-8 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Nova Simulação</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <input
-            type="number"
+            type="text"
             placeholder="Aporte Inicial"
             value={aporteInicial}
-            onChange={e => setAporteInicial(Number(e.target.value))}
-            className="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onChange={e => setAporteInicial(e.target.value)}
+            className="border border-gray-300 p-3 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
-            type="number"
+            type="text"
             placeholder="Aporte Mensal"
             value={aporteMensal}
-            onChange={e => setAporteMensal(Number(e.target.value))}
-            className="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onChange={e => setAporteMensal(e.target.value)}
+            className="border border-gray-300 p-3 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
-            type="number"
+            type="text"
             placeholder="Taxa de Juros (%)"
             value={taxaJuros}
-            onChange={e => setTaxaJuros(Number(e.target.value))}
-            className="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onChange={e => setTaxaJuros(e.target.value)}
+            className="border border-gray-300 p-3 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <button
           onClick={handleSimulacao}
-          className="bg-blue-500 text-white font-semibold px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+          className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:from-blue-600 hover:to-blue-700 transition-all"
         >
           Simular
         </button>
       </div>
 
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">Resultados da Simulação</h2>
-        <ul className="bg-white p-4 rounded-lg shadow-md max-h-64 overflow-y-auto">
+      {/* Resultados */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg mb-8 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Resultados da Simulação</h2>
+        <ul className="max-h-64 overflow-y-auto divide-y divide-gray-200">
           {resultados.map((r, i) => (
-            <li key={i} className="border-b last:border-b-0 py-2">
-              Mês {r.mes}: <span className="font-bold">R$ {r.total}</span>
+            <li key={i} className="py-3 flex justify-between items-center">
+              Mês {r.mes}:{" "} 
+              <span className="font-bold text-green-600">
+                R$ {Number(r.total).toLocaleString("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+              </span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Histórico de Simulações</h2>
-        <ul className="space-y-4 max-h-64 overflow-y-auto">
+      {/* Histórico */}
+      <div className="bg-white p-6 rounded-2xl shadow-lg max-w-4xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Histórico de Simulações</h2>
+        <ul className="max-h-64 overflow-y-auto divide-y divide-gray-200">
           {historico.map((h, i) => {
             const primeiroTotal = JSON.parse(h.resultados || "[]")[0]?.total || 0;
             return (
-              <li
-                key={i}
-                className="bg-white p-4 rounded-lg shadow-md flex justify-between items-center"
-              >
-                <span>{h.calculation_date || h.createdAt}</span>
-                <span className="font-bold">R$ {primeiroTotal}</span>
+              <li key={i} className="py-3 flex justify-between items-center">
+                <span className="text-gray-600">{h.calculation_date || h.createdAt}</span>
+                <span className="font-bold text-blue-600">
+                  R$ {Number(primeiroTotal).toLocaleString("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                </span>
               </li>
             );
           })}
